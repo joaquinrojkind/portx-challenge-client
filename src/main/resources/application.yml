@@ -1,0 +1,3 @@
+client:
+  portxclient:
+    baseUrl: http://localhost:8080/payments_api
