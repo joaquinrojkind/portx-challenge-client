@@ -9,5 +9,5 @@ import retrofit2.http.POST;
 public interface PortXPaymentApiClient {
 
     @POST("payments")
-    Call<Payment> acceptPayment(@Body Payment payment, @Header(value = "Idempotency-Key") String idempotencyKey);
+    Call<Void> acceptPayment(@Body Payment payment, @Header(value = "Idempotency-Key") String idempotencyKey);
 }

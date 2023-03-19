@@ -15,7 +15,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 @Configuration
 public class RetrofitConfig {
 
-    @Value("${client.portxclient-.baseUrl}")
+    @Value("${client.portxclient.baseUrl}")
     private String baseUrl;
 
     @Bean

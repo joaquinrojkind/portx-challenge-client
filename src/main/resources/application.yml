@@ -1,3 +1,5 @@
+server:
+  port: 8181
 client:
   portxclient:
-    baseUrl: http://localhost:8080/payments_api
+    baseUrl: http://localhost:8080/payments_api/
