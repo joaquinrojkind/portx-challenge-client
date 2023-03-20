@@ -3,6 +3,7 @@ package com.portx.clientapp.service;
 import com.github.javafaker.Faker;
 import com.google.gson.Gson;
 import com.portx.clientapp.client.PortXPaymentApiClient;
+import com.portx.clientapp.client.model.AcceptPaymentResponse;
 import com.portx.clientapp.client.model.Account;
 import com.portx.clientapp.client.model.Payment;
 import com.portx.clientapp.client.model.User;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 @Slf4j
@@ -51,16 +53,21 @@ public class PortXPaymentServiceImpl implements PortXPaymentService {
         for (int i = 0; i < paymentCount; i++) {
             log.info("\n");
             log.info("Executing request number {}", i + 1);
-            Call<Void> call = portXPaymentApiClient.acceptPayment(payments.get(i), null);
+            Call<AcceptPaymentResponse> call = portXPaymentApiClient.acceptPayment(payments.get(i), null);
             log.info("Request url is {}", call.request().url());
             log.info("Request body is: {}", new Gson().toJson(payments.get(i)));
-            Response response;
+            Response<AcceptPaymentResponse> response;
             try {
                 response = call.execute();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             log.info("Response http status is {}", response.code());
+            if (Objects.nonNull(response.body())) {
+                log.info("Response body is: {}", new Gson().toJson(response.body()));
+            } else {
+                log.info("No response body has been received");
+            }
         }
         log.info("\n");
         log.info("Terminating application with status 0");
